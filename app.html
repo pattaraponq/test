@@ -1,19 +1,28 @@
-<html>
-<head>
-  <title>NETPIE demo</title>
-  <script src="https://netpie.io/microgear.js"></script>
-  <script>
-    const APPKEY    = <WHb9PGbAjWnL7hs>;
-    const APPSECRET = <qaiUhItyBR06oV5IflyAJ1kp8>;
-    const APPID     = <TeezSmartHome>;
+<script src="https://netpie.io/microgear.js"></script>
+<script>
+  const APPKEY    = <APPKEY>;
+  const APPSECRET = <APPSECRET>;
+  const APPID     = <APPID>;
 
     var microgear = Microgear.create({
-      gearkey: APPKEY,
-      gearsecret: APPSECRET
+        gearkey: APPKEY,
+        gearsecret: APPSECRET
     });
-  </script>
-</head>
-<body>
 
-</body>
-</html>
+    microgear.on('message',function(topic,msg) {
+        document.getElementById("data").innerHTML = msg;
+    });
+
+    microgear.on('connected', function() {
+        microgear.setname('htmlgear');
+        document.getElementById("data").innerHTML = "Now I am connected with netpie...";
+        setInterval(function() {
+            microgear.chat("doraemon","Hello from myself at "+Date.now());
+        },5000);
+    });
+    microgear.setname('doraemon');
+    microgear.subscribe("/mails");
+    microgear.connect(APPID);
+</script>
+
+<div id="data">_____</div>
