@@ -2,13 +2,51 @@
 <html>
 <body>
 
-<h1>My First JavaScript</h1>
+<p>Test simple code for Smart Switch</p>
 
-<button type="button"
-onclick="document.getElementById('demo').innerHTML = Date()">
-Click me to display Date and Time.</button>
 
-<p id="demo"></p>
+
+
+<script>
+const APPKEY = "WHb9PGbAjWnL7hs";
+	const APPSECRET = "qaiUhItyBR06oV5IflyAJ1kp8";
+	const APPID = "TeezSmartHome";
+	var microgear = Microgear.create({
+		gearkey: APPKEY,
+		gearsecret: APPSECRET
+	});
+	function switchPress(){
+		if(document.getElementById("cube-switch").className == "cube-switch active"){
+			microgear.chat("pieplug","ON");
+		}else if(document.getElementById("cube-switch").className == "cube-switch"){
+			microgear.chat("pieplug","OFF");
+		}
+	}
+	microgear.on('message', function(topic,data) {
+		if(data=="OFF"){
+			document.getElementById("cube-switch").className = "cube-switch active";
+		}else if(data=="ON"){
+			document.getElementById("cube-switch").className = "cube-switch";
+		}
+	});
+	microgear.on('connected', function() {
+		microgear.setname('controllerplug');
+		document.getElementById("cube-switch").className = "cube-switch active";
+		document.getElementById("cube-switch").style.display = "block";
+	});
+	microgear.resettoken(function(err){
+		microgear.connect(APPID);
+	});
+        
+        
+        
+        
+</script>
+
+<button href="" class="cube-switch active" id="cube-switch" onclick="switchPress()">Switch On</button>
+
+<button href="" class="cube-switch" id="cube-switch" onclick="switchPress()">Switch Off</button>
+
 
 </body>
-</html> 
+</html>
