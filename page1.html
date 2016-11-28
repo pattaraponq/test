@@ -16,23 +16,23 @@ const APPKEY = "WHb9PGbAjWnL7hs";
 		gearsecret: APPSECRET
 	});
 	function switchPress(){
-		if(document.getElementById("cube-switch").className == "cube-switch active"){
+		if(document.getElementById("turn-on")){
 			microgear.chat("pieplug","ON");
-		}else if(document.getElementById("cube-switch").className == "cube-switch"){
+		}else if(document.getElementById("turn-off")){
 			microgear.chat("pieplug","OFF");
 		}
 	}
 	microgear.on('message', function(topic,data) {
 		if(data=="OFF"){
-			document.getElementById("cube-switch").className = "cube-switch active";
+			document.getElementById("turn-on");
 		}else if(data=="ON"){
-			document.getElementById("cube-switch").className = "cube-switch";
+			document.getElementById("turn-off");
 		}
 	});
 	microgear.on('connected', function() {
 		microgear.setname('controllerplug');
-		document.getElementById("cube-switch").className = "cube-switch active";
-		document.getElementById("cube-switch").style.display = "block";
+		document.getElementById("turn-on");
+		document.getElementById("turn-off");
 	});
 	microgear.resettoken(function(err){
 		microgear.connect(APPID);
@@ -43,14 +43,12 @@ const APPKEY = "WHb9PGbAjWnL7hs";
         
 </script>
 
-<button type="button"
-onclick= document.getElementById("cube-switch").className = "cube-switch active">
-Switch On2</button>
 
 
-<button  id="cube-switch" onclick="switchPress()">Switch On</button>
 
-<button href="" class="cube-switch" id="cube-switch" onclick="switchPress()">Switch Off</button>
+<button  id="turn-on" onclick="switchPress()">Switch On</button>
+<button  id="turn-off" onclick="switchPress()">Switch Off</button>
+
 
 
 </body>
